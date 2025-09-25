@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8" />
+<title>Sakinių įterpimas — Variantas 2 (Muziejus)</title>
+<style>
+  body{font-family:Arial, sans-serif; margin:40px; line-height:1.6; color:#111827}
+  h1{color:#1d4ed8; margin-bottom:6px}
+  h2{color:#334155; margin-top:22px}
+  .card{border:1px solid #e5e7eb; border-radius:12px; padding:16px; background:#fff}
+  select{padding:4px 8px; border:1px solid #cbd5e1; border-radius:8px; margin-left:6px; margin-right:6px}
+  .btn{padding:8px 14px; border-radius:10px; border:1px solid #cbd5e1; background:#f1f5f9; cursor:pointer; margin-right:8px}
+  .btn:hover{background:#e2e8f0}
+  .ok{color:#047857; font-weight:700}
+  .bad{color:#b91c1c; font-weight:700}
+  .result{margin-top:14px; font-weight:700}
+  .sticky{position:sticky; bottom:0; background:#ffffffcc; backdrop-filter: blur(6px); padding:10px; border-top:1px solid #e5e7eb; margin-top:14px}
+  .muted{color:#6b7280; font-size:.92em}
+</style>
+</head>
+<body>
+  <h1>Sakinių įterpimas — Variantas 2 (Muziejus)</h1>
+  <p class="muted">Skaitydami tekstą raskite, kur turėtų būti iš teksto išimti sakiniai A–H. Sakinių yra daugiau. <strong>0 – pavyzdys.</strong></p>
+
+  <h2>Tekstas</h2>
+  <div class="card">Nacionalinis muziejus po ilgos rekonstrukcijos atvėrė naujas sales. Lankytojams siūlomos atnaujintos ekspozicijos ir platesnės edukacinės programos. <strong>(0) Pavyzdys: Du kartus per mėnesį muziejus lankytojams duris atveria nemokamai.</strong>
+Atnaujintos bilietų kasos ir įėjimo zonos leidžia sklandžiau patekti į muziejų. <strong>(11)</strong> <select id='sel11'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+Siekiant apsaugoti vertingus eksponatus, buvo modernizuotos klimato ir saugumo sistemos. <strong>(12)</strong> <select id='sel12'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+Specialiai šeimoms sukurtos poilsio ir edukacijos erdvės su minkštomis zonomis bei stalais kūrybinėms veikloms. <strong>(13)</strong> <select id='sel13'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+Muziejuje lankytojų laukia ir skaitmeniniai sprendimai: audio gidai bei QR kodai prie eksponatų. <strong>(14)</strong> <select id='sel14'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+Judėjimo negalią turintiems lankytojams patogiau – įrengti nauji liftai ir pandusai. <strong>(15)</strong> <select id='sel15'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select>
+Muziejaus vadovybė teigia, kad įstaiga sieks derinti tradiciją ir šiuolaikines technologijas, kad kiekvienas jaustųsi laukiamas. <strong>(16)</strong> <select id='sel16'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+
+  <h2>Sakiniai (A–H)</h2>
+  <div class="card">
+    <ol>
+      <li><strong>A</strong> Nauji audio gidai veikia telefonu, o QR kodai leidžia rinktis kelias kalbas.</li><li><strong>B</strong> Du kartus per mėnesį muziejus lankytojams duris atveria nemokamai.</li><li><strong>C</strong> Todėl liftais ir pandusais dabar gali naudotis žmonės su judėjimo negalia.</li><li><strong>D</strong> Interaktyvios salės skatina vaikus liesti eksponatus ir kurti savo maršrutą.</li><li><strong>E</strong> Šios erdvės sukurtos ilgesniam poilsiui, darbui ir edukacijoms.</li><li><strong>F</strong> Po rekonstrukcijos įrengta moderni klimato kontrolė jautriems eksponatams.</li><li><strong>G</strong> Lankytojai vertina, kad bilietus galima įsigyti internetu ir patekti be eilių.</li><li><strong>H</strong> Muziejus siekia suderinti tradiciją ir naująsias technologijas.</li>
+    </ol>
+    <p class="muted">Pastaba: (0) jau įterptas kaip pavyzdys.</p>
+  </div>
+
+  <div class="sticky">
+    <button class="btn" onclick="checkAnswers()">Patikrinti</button>
+    <button class="btn" onclick="resetAll()">Iš naujo</button>
+    <div id="result" class="result"></div>
+  </div>
+
+<script>
+const correct = {11:'G',12:'F',13:'E',14:'A',15:'C',16:'H'};
+function checkAnswers(){
+  let score=0, total=Object.keys(correct).length, missing=[];
+  for (const k of [11,12,13,14,15,16]){
+    const v = document.getElementById('sel'+k).value;
+    if(!v) missing.push(k);
+  }
+  if(missing.length>0){
+    document.getElementById('result').innerHTML = '⚠️ Neužpildyta: '+missing.join(', ');
+    return;
+  }
+  for (const k of [11,12,13,14,15,16]){
+    const sel = document.getElementById('sel'+k);
+    if(sel.value === correct[k]){ sel.style.outline='2px solid #22c55e'; sel.style.outlineOffset='2px'; score++; }
+    else { sel.style.outline='2px solid #ef4444'; sel.style.outlineOffset='2px'; }
+    sel.disabled=true;
+  }
+  const pct = Math.round(100*score/total);
+  document.getElementById('result').textContent = 'Rezultatas: ' + score + ' iš ' + total + ' (' + pct + '%). Teisingi atsakymai: 11–G; 12–F; 13–E; 14–A; 15–C; 16–H.';
+}
+function resetAll(){
+  for (const k of [11,12,13,14,15,16]){
+    const sel = document.getElementById('sel'+k);
+    sel.value='';
+    sel.style.outline='none';
+    sel.disabled=false;
+  }
+  document.getElementById('result').textContent='';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+</script>
+</body>
+</html>
